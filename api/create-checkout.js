@@ -26,7 +26,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Método não permitido' });
   }
 
-  const { email, password, userId } = req.body;
+  const { email, password, userId, plan } = req.body;
 
   try {
     let finalUserId = userId;
@@ -48,11 +48,20 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Dados insuficientes para criar usuário.' });
     }
 
+    // Seleciona o ID do preço com base no plano escolhido (Mensal ou Anual)
+    const priceId = plan === 'yearly'
+      ? process.env.STRIPE_PRICE_ID_YEARLY
+      : process.env.STRIPE_PRICE_ID_MONTHLY;
+
+    if (!priceId) {
+      return res.status(400).json({ error: 'ID de preço do Stripe não configurado para este plano.' });
+    }
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
         {
-          price: process.env.STRIPE_PRICE_ID,
+          price: priceId,
           quantity: 1,
         },
       ],
