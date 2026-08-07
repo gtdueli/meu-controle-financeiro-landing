@@ -77,8 +77,8 @@ export default async function handler(req, res) {
       mode: 'subscription',
       client_reference_id: finalUserId,
       customer_email: email,
-      success_url: `${req.headers.origin || 'https://meucontrolefinanceiro.vercel.app'}/login?payment=success`,
-      cancel_url: `${req.headers.origin || 'https://meucontrolefinanceiro.vercel.app'}/login?payment=cancelled`,
+      success_url: `${req.headers.origin || 'https://meucontrolefinanceiro.vercel.app'}/?payment=success`,
+      cancel_url: `${req.headers.origin || 'https://meucontrolefinanceiro.vercel.app'}/?payment=cancelled`,
     });
 
     return res.status(200).json({ url: session.url });
