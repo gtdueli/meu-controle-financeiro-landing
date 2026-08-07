@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Controle Financeiro | Simplifique Suas Finanças</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts (Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 antialiased">
+
+  <!-- NAVBAR -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="bg-emerald-500 p-2 rounded-lg text-slate-950 font-black text-xl">R$</div>
+        <span class="font-bold text-xl tracking-tight text-white">Meu Controle Financeiro</span>
+      </div>
+      <a href="https://meucontrole-financeiro.vercel.app" class="text-sm font-medium text-slate-300 hover:text-white border border-slate-700 hover:border-emerald-500 px-4 py-2 rounded-lg transition">
+        Acessar Minha Conta
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+    <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+      Sua vida financeira sob controle
+    </span>
+    <h1 class="mt-6 text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight">
+      Organize suas finanças sem complicações e <span class="text-emerald-400">tome o controle do seu dinheiro</span>.
+    </h1>
+    <p class="mt-6 text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto">
+      Importe extratos bancários (.OFX e .CSV), agende contas com alertas de vencimento, proteja sua privacidade e gere relatórios profissionais em Excel e PDF com 1 clique.
+    </p>
+    <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+      <a href="#planos" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-8 py-4 rounded-xl shadow-lg shadow-emerald-500/20 transition transform hover:-translate-y-0.5">
+        Quero Começar Agora
+      </a>
+    </div>
+
+    <!-- MOCKUP / PRINT DO APP -->
+    <div class="mt-16 relative mx-auto max-w-5xl rounded-2xl p-2 bg-slate-800/50 border border-slate-700/50 shadow-2xl">
+      <div class="bg-slate-950 rounded-xl overflow-hidden aspect-video flex flex-col items-center justify-center text-slate-500 border border-slate-800 p-6">
+        <p class="text-sm font-medium text-slate-400 mb-2">Dashboard do Sistema</p>
+        <p class="text-xs text-slate-600">Gráficos de Rosca por Categoria • Importação OFX • Agendamento de Contas • Ocultar Valores</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECURSOS / BENEFÍCIOS -->
+  <section class="py-20 bg-slate-950 border-y border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold text-white">Recursos avançados pensados na sua rotina</h2>
+        <p class="mt-4 text-slate-400">Ferramentas práticas para automatizar seus lançamentos e evitar atrasos em contas.</p>
+      </div>
+
+      <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Card 1: Importação Bancária -->
+        <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-emerald-500/50 transition">
+          <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center font-bold text-xl mb-6">🏦</div>
+          <h3 class="text-xl font-bold text-white mb-2">Importação de Extrato (.OFX / .CSV)</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Chega de digitar tudo na mão. Suba o arquivo do seu banco em formato .OFX ou .CSV, selecione quais transações deseja importar e pronto.</p>
+        </div>
+
+        <!-- Card 2: Agendamentos e Alertas -->
+        <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-emerald-500/50 transition">
+          <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center font-bold text-xl mb-6">🔔</div>
+          <h3 class="text-xl font-bold text-white mb-2">Contas a Vencer & Alertas</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Agende o pagamento de boletos e despesas recorrentes. Receba avisos com dias de antecedência para nunca mais pagar juros ou multas.</p>
+        </div>
+
+        <!-- Card 3: Gráficos por Categoria -->
+        <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-emerald-500/50 transition">
+          <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center font-bold text-xl mb-6">🎨</div>
+          <h3 class="text-xl font-bold text-white mb-2">Gráfico de Rosca Personalizado</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Visualize exatamente onde está gastando seu dinheiro. Exibição colorida e interativa dividida por categorias customizadas por você.</p>
+        </div>
+
+        <!-- Card 4: Relatórios em Excel e PDF -->
+        <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-emerald-500/50 transition">
+          <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center font-bold text-xl mb-6">📄</div>
+          <h3 class="text-xl font-bold text-white mb-2">Exportação em Excel e PDF</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Exporte seus dados filtrados por mês ou ano tanto em planilha editável (.xlsx) quanto em relatório consolidado em PDF para impressão.</p>
+        </div>
+
+        <!-- Card 5: Modo Privacidade -->
+        <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-emerald-500/50 transition">
+          <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center font-bold text-xl mb-6">👁️</div>
+          <h3 class="text-xl font-bold text-white mb-2">Modo Privacidade (Ocultar Valores)</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Acesse o sistema em locais públicos ou perto de outras pessoas sem preocupação. Alterne a exibição dos saldos com o botão "Mostrar/Ocultar".</p>
+        </div>
+
+        <!-- Card 6: Multiplataforma -->
+        <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-emerald-500/50 transition">
+          <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center font-bold text-xl mb-6">📱</div>
+          <h3 class="text-xl font-bold text-white mb-2">Acesso no Celular e Computador</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Sua conta fica sincronizada na nuvem com segurança máxima. Acesse pelo navegador do celular, tablet ou computador quando quiser.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANOS E PREÇOS -->
+  <section id="planos" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold text-white">Escolha o plano ideal para você</h2>
+      <p class="mt-4 text-slate-400">Acesso imediato a todos os recursos sem limitações.</p>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      
+      <!-- PLANO MENSAL -->
+      <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 flex flex-col justify-between">
+        <div>
+          <h3 class="text-xl font-bold text-white">Plano Mensal</h3>
+          <p class="text-slate-400 text-sm mt-1">Flexibilidade total mês a mês</p>
+          <div class="mt-6">
+            <span class="text-4xl font-extrabold text-white">R$ 19,90</span>
+            <span class="text-slate-400">/mês</span>
+          </div>
+          <ul class="mt-8 space-y-4 text-sm text-slate-300">
+            <li class="flex items-center gap-3">✓ Importação de extratos .OFX e .CSV</li>
+            <li class="flex items-center gap-3">✓ Agendamentos de contas com alertas</li>
+            <li class="flex items-center gap-3">✓ Gráficos por categorias personalizadas</li>
+            <li class="flex items-center gap-3">✓ Relatórios em Excel (.xlsx) e PDF</li>
+            <li class="flex items-center gap-3">✓ Modo Privacidade (Mostrar/Ocultar)</li>
+          </ul>
+        </div>
+        <a href="https://buy.stripe.com/test_aFa6oI8z17X3f51dEW5Rm00" class="mt-8 w-full block text-center bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-4 rounded-xl transition">
+          Assinar Plano Mensal
+        </a>
+      </div>
+
+      <!-- PLANO ANUAL -->
+      <div class="bg-slate-900 p-8 rounded-2xl border-2 border-emerald-500 relative flex flex-col justify-between shadow-xl shadow-emerald-500/10">
+        <span class="absolute -top-3 right-6 bg-emerald-500 text-slate-950 font-bold text-xs px-3 py-1 rounded-full uppercase">
+          Mais Vantajoso
+        </span>
+        <div>
+          <h3 class="text-xl font-bold text-white">Plano Anual</h3>
+          <p class="text-slate-400 text-sm mt-1">Economize no plano de longo prazo</p>
+          <div class="mt-6">
+            <span class="text-4xl font-extrabold text-white">R$ 179,90</span>
+            <span class="text-slate-400">/ano</span>
+            <p class="text-xs text-emerald-400 mt-1">Equivale a apenas R$ 14,99/mês</p>
+          </div>
+          <ul class="mt-8 space-y-4 text-sm text-slate-300">
+            <li class="flex items-center gap-3">✓ Todos os recursos liberados sem restrição</li>
+            <li class="flex items-center gap-3">✓ Desconto exclusivo no plano anual</li>
+            <li class="flex items-center gap-3">✓ Importação ilimitada de extratos</li>
+            <li class="flex items-center gap-3">✓ Exportação de relatórios Excel e PDF</li>
+            <li class="flex items-center gap-3">✓ Suporte prioritário e atualizações</li>
+          </ul>
+        </div>
+        <a href="https://buy.stripe.com/test_4gMbJ2aH9gtzg951We5Rm01" class="mt-8 w-full block text-center bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3 px-4 rounded-xl transition shadow-lg shadow-emerald-500/20">
+          Assinar Plano Anual
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ / DÚVIDAS FREQUENTES -->
+  <section class="py-20 bg-slate-950 border-t border-slate-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-white text-center mb-12">Perguntas Frequentes</h2>
+      <div class="space-y-6">
+        <div class="bg-slate-900 p-6 rounded-xl border border-slate-800">
+          <h3 class="font-bold text-white text-lg">Como funciona a importação de extrato bancário?</h3>
+          <p class="text-slate-400 text-sm mt-2">Você baixa o arquivo de extrato (.OFX ou .CSV) no aplicativo do seu banco e envia para o sistema. O app lê as transações e permite que você escolha exatamente o que deseja salvar e em qual categoria encaixar.</p>
+        </div>
+        <div class="bg-slate-900 p-6 rounded-xl border border-slate-800">
+          <h3 class="font-bold text-white text-lg">Como funcionam os alertas de contas a vencer?</h3>
+          <p class="text-slate-400 text-sm mt-2">Você cadastra suas contas futuras e define com quantos dias de antecedência deseja ser lembrado. O sistema avisa os vencimentos próximos para evitar atrasos e multas.</p>
+        </div>
+        <div class="bg-slate-900 p-6 rounded-xl border border-slate-800">
+          <h3 class="font-bold text-white text-lg">Como recebo o acesso após a compra?</h3>
+          <p class="text-slate-400 text-sm mt-2">Assim que a confirmação do pagamento for concluída pelo Stripe, você é redirecionado para criar sua conta ou fazer login no sistema imediatamente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-8 border-t border-slate-800 text-center text-xs text-slate-500">
+    <p>© 2026 Meu Controle Financeiro. Todos os direitos reservados.</p>
+  </footer>
+
+</body>
+</html>
