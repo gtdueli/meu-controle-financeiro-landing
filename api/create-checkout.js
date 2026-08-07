@@ -1,43 +1,71 @@
 import Stripe from 'stripe';
+import { createClient } from '@supabase/supabase-js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
+const supabaseAdmin = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
+
 export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  );
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método não permitido' });
   }
 
-  const { email, userId, priceId } = req.body;
-
-  if (!email || !userId) {
-    return res.status(400).json({ error: 'E-mail e ID do usuário são obrigatórios.' });
-  }
+  const { email, password, userId } = req.body;
 
   try {
-    // Cria a sessão de checkout no Stripe
+    let finalUserId = userId;
+
+    if (!finalUserId && email && password) {
+      const { data, error } = await supabaseAdmin.auth.admin.createUser({
+        email,
+        password,
+        email_confirm: true,
+      });
+
+      if (error) {
+        return res.status(400).json({ error: error.message });
+      }
+      finalUserId = data.user.id;
+    }
+
+    if (!finalUserId) {
+      return res.status(400).json({ error: 'Dados insuficientes para criar usuário.' });
+    }
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      customer_email: email,
-      metadata: {
-        supabase_user_id: userId, // Vincula o ID do usuário do Supabase para o Webhook
-      },
       line_items: [
         {
-          // Usa o priceId enviado pelo frontend ou o padrão cadastrado nas suas variáveis
-          price: priceId || process.env.STRIPE_PRICE_ID, 
+          price: process.env.STRIPE_PRICE_ID,
           quantity: 1,
         },
       ],
       mode: 'subscription',
-      // Para onde o cliente vai após pagar com sucesso
-      success_url: `${req.headers.origin}/login?payment=success`,
-      // Para onde o cliente vai se cancelar ou fechar a janela
-      cancel_url: `${req.headers.origin}/login?payment=cancelled`,
+      client_reference_id: finalUserId,
+      customer_email: email,
+      success_url: `${req.headers.origin || 'https://meucontrolefinanceiro.vercel.app'}/login?payment=success`,
+      cancel_url: `${req.headers.origin || 'https://meucontrolefinanceiro.vercel.app'}/login?payment=cancelled`,
     });
 
     return res.status(200).json({ url: session.url });
   } catch (err) {
-    console.error('Erro ao criar sessão no Stripe:', err);
+    console.error('Erro no create-checkout:', err);
     return res.status(500).json({ error: err.message });
   }
 }
