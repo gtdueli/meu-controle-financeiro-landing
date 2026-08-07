@@ -43,35 +43,57 @@ export default async function handler(req, res) {
     case 'checkout.session.completed': {
       const session = event.data.object;
       const userEmail = session.customer_details?.email || session.customer_email;
+      const userId = session.metadata?.supabase_user_id;
       const stripeCustomerId = session.customer;
       const stripeSubscriptionId = session.subscription;
 
-      // Atualiza o perfil correspondente pelo email cadastrado
-      const { error } = await supabase
-        .from('profiles')
-        .update({
-          stripe_customer_id: stripeCustomerId,
-          stripe_subscription_id: stripeSubscriptionId,
-          subscription_status: 'active',
-          updated_at: new Date(),
-        })
-        .eq('email', userEmail);
+      // Prepara a atualização da tabela profiles
+      const updateData = {
+        stripe_customer_id: stripeCustomerId,
+        stripe_subscription_id: stripeSubscriptionId,
+        subscription_status: 'active',
+        updated_at: new Date(),
+      };
+
+      // Tenta atualizar primeiro pelo ID do Supabase (se enviado nos metadados) ou pelo e-mail
+      let error;
+      if (userId) {
+        const result = await supabase
+          .from('profiles')
+          .update(updateData)
+          .eq('id', userId);
+        error = result.error;
+      } else if (userEmail) {
+        const result = await supabase
+          .from('profiles')
+          .update(updateData)
+          .eq('email', userEmail);
+        error = result.error;
+      }
 
       if (error) {
-        console.error('Erro ao atualizar profiles:', error);
+        console.error('Erro ao atualizar profiles no Supabase:', error);
+      } else {
+        console.log(`Assinatura ativada com sucesso para: ${userId || userEmail}`);
       }
       break;
     }
 
     case 'customer.subscription.deleted': {
       const subscription = event.data.object;
-      await supabase
+
+      // Cancela o acesso do usuário no banco de dados
+      const { error } = await supabase
         .from('profiles')
         .update({ 
           subscription_status: 'canceled',
           updated_at: new Date()
         })
         .eq('stripe_subscription_id', subscription.id);
+
+      if (error) {
+        console.error('Erro ao cancelar assinatura no Supabase:', error);
+      }
       break;
     }
 
