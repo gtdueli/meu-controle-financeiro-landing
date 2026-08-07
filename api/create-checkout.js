@@ -32,14 +32,12 @@ export default async function handler(req, res) {
     let finalUserId = userId;
 
     if (!finalUserId && email) {
-      // 1. Verifica se o usuário já existe no Supabase
-      const { data: existingUsers, searchError } = await supabaseAdmin.auth.admin.listUsers();
+      const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers();
       const foundUser = existingUsers?.users?.find((u) => u.email === email);
 
       if (foundUser) {
         finalUserId = foundUser.id;
       } else if (password) {
-        // 2. Se não existe, cria um novo
         const { data, error } = await supabaseAdmin.auth.admin.createUser({
           email,
           password,
@@ -57,7 +55,6 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Dados insuficientes para processar o usuário.' });
     }
 
-    // Seleciona o ID do preço com base no plano escolhido
     const priceId = plan === 'yearly'
       ? process.env.STRIPE_PRICE_ID_YEARLY
       : process.env.STRIPE_PRICE_ID_MONTHLY;
@@ -67,7 +64,8 @@ export default async function handler(req, res) {
     }
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
+      // Adicionando 'pix' aqui. O Stripe priorizará os métodos configurados na sua conta.
+      payment_method_types: ['card', 'pix'],
       line_items: [
         {
           price: priceId,
