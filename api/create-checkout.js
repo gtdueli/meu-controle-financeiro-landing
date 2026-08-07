@@ -31,24 +31,33 @@ export default async function handler(req, res) {
   try {
     let finalUserId = userId;
 
-    if (!finalUserId && email && password) {
-      const { data, error } = await supabaseAdmin.auth.admin.createUser({
-        email,
-        password,
-        email_confirm: true,
-      });
+    if (!finalUserId && email) {
+      // 1. Verifica se o usuário já existe no Supabase
+      const { data: existingUsers, searchError } = await supabaseAdmin.auth.admin.listUsers();
+      const foundUser = existingUsers?.users?.find((u) => u.email === email);
 
-      if (error) {
-        return res.status(400).json({ error: error.message });
+      if (foundUser) {
+        finalUserId = foundUser.id;
+      } else if (password) {
+        // 2. Se não existe, cria um novo
+        const { data, error } = await supabaseAdmin.auth.admin.createUser({
+          email,
+          password,
+          email_confirm: true,
+        });
+
+        if (error) {
+          return res.status(400).json({ error: error.message });
+        }
+        finalUserId = data.user.id;
       }
-      finalUserId = data.user.id;
     }
 
     if (!finalUserId) {
-      return res.status(400).json({ error: 'Dados insuficientes para criar usuário.' });
+      return res.status(400).json({ error: 'Dados insuficientes para processar o usuário.' });
     }
 
-    // Seleciona o ID do preço com base no plano escolhido (Mensal ou Anual)
+    // Seleciona o ID do preço com base no plano escolhido
     const priceId = plan === 'yearly'
       ? process.env.STRIPE_PRICE_ID_YEARLY
       : process.env.STRIPE_PRICE_ID_MONTHLY;
