@@ -43,11 +43,10 @@ export default async function handler(req, res) {
     case 'checkout.session.completed': {
       const session = event.data.object;
       const userEmail = session.customer_details?.email || session.customer_email;
-      const userId = session.metadata?.supabase_user_id;
+      const userId = session.client_reference_id; // <--- Ajustado para ler corretamente o client_reference_id
       const stripeCustomerId = session.customer;
       const stripeSubscriptionId = session.subscription;
 
-      // Prepara a atualização da tabela profiles
       const updateData = {
         stripe_customer_id: stripeCustomerId,
         stripe_subscription_id: stripeSubscriptionId,
@@ -55,7 +54,6 @@ export default async function handler(req, res) {
         updated_at: new Date(),
       };
 
-      // Tenta atualizar primeiro pelo ID do Supabase (se enviado nos metadados) ou pelo e-mail
       let error;
       if (userId) {
         const result = await supabase
@@ -82,7 +80,6 @@ export default async function handler(req, res) {
     case 'customer.subscription.deleted': {
       const subscription = event.data.object;
 
-      // Cancela o acesso do usuário no banco de dados
       const { error } = await supabase
         .from('profiles')
         .update({ 
@@ -93,6 +90,27 @@ export default async function handler(req, res) {
 
       if (error) {
         console.error('Erro ao cancelar assinatura no Supabase:', error);
+      }
+      break;
+    }
+
+    // Adicionado para bloquear caso o pagamento da renovação falhe
+    case 'invoice.payment_failed': {
+      const invoice = event.data.object;
+      const subscriptionId = invoice.subscription;
+
+      if (subscriptionId) {
+        const { error } = await supabase
+          .from('profiles')
+          .update({ 
+            subscription_status: 'past_due',
+            updated_at: new Date()
+          })
+          .eq('stripe_subscription_id', subscriptionId);
+
+        if (error) {
+          console.error('Erro ao atualizar status de falha de pagamento:', error);
+        }
       }
       break;
     }
