@@ -65,7 +65,7 @@ export default async function handler(req, res) {
 
     const session = await stripe.checkout.sessions.create({
       // Adicionando 'pix' aqui. O Stripe priorizará os métodos configurados na sua conta.
-      payment_method_types: ['card', 'pix'],
+      payment_method_types: ['card'],
       line_items: [
         {
           price: priceId,
