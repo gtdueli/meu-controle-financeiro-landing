@@ -43,34 +43,34 @@ export default async function handler(req, res) {
     case 'checkout.session.completed': {
       const session = event.data.object;
       const userEmail = session.customer_details?.email || session.customer_email;
-      const userId = session.client_reference_id; // <--- Ajustado para ler corretamente o client_reference_id
+      const userId = session.client_reference_id;
       const stripeCustomerId = session.customer;
       const stripeSubscriptionId = session.subscription;
 
       const updateData = {
         stripe_customer_id: stripeCustomerId,
         stripe_subscription_id: stripeSubscriptionId,
-        subscription_status: 'active',
+        status: 'active', // <--- Ajustado para a coluna 'status'
         updated_at: new Date(),
       };
 
       let error;
       if (userId) {
         const result = await supabase
-          .from('profiles')
+          .from('subscriptions') // <--- Ajustado para a tabela 'subscriptions'
           .update(updateData)
           .eq('id', userId);
         error = result.error;
       } else if (userEmail) {
         const result = await supabase
-          .from('profiles')
+          .from('subscriptions') // <--- Ajustado para a tabela 'subscriptions'
           .update(updateData)
           .eq('email', userEmail);
         error = result.error;
       }
 
       if (error) {
-        console.error('Erro ao atualizar profiles no Supabase:', error);
+        console.error('Erro ao atualizar subscriptions no Supabase:', error);
       } else {
         console.log(`Assinatura ativada com sucesso para: ${userId || userEmail}`);
       }
@@ -81,9 +81,9 @@ export default async function handler(req, res) {
       const subscription = event.data.object;
 
       const { error } = await supabase
-        .from('profiles')
+        .from('subscriptions') // <--- Ajustado para a tabela 'subscriptions'
         .update({ 
-          subscription_status: 'canceled',
+          status: 'canceled', // <--- Ajustado para a coluna 'status'
           updated_at: new Date()
         })
         .eq('stripe_subscription_id', subscription.id);
@@ -94,16 +94,15 @@ export default async function handler(req, res) {
       break;
     }
 
-    // Adicionado para bloquear caso o pagamento da renovação falhe
     case 'invoice.payment_failed': {
       const invoice = event.data.object;
       const subscriptionId = invoice.subscription;
 
       if (subscriptionId) {
         const { error } = await supabase
-          .from('profiles')
+          .from('subscriptions') // <--- Ajustado para a tabela 'subscriptions'
           .update({ 
-            subscription_status: 'past_due',
+            status: 'past_due', // <--- Ajustado para a coluna 'status'
             updated_at: new Date()
           })
           .eq('stripe_subscription_id', subscriptionId);
