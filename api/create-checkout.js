@@ -26,7 +26,6 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Método não permitido' });
   }
 
-  // Recebe também os dados cadastrais vindos do seu front-end
   const { email, password, userId, plan, name, cpf, address } = req.body;
 
   try {
@@ -64,7 +63,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'ID de preço do Stripe não configurado para este plano.' });
     }
 
-    // Cria ou atualiza o Customer no Stripe já amarrando o CPF e o endereço fiscal
+    // Monta o objeto do cliente no Stripe com os dados fiscais do Brasil
     const customerData = {
       email: email,
       name: name || undefined,
@@ -86,7 +85,7 @@ export default async function handler(req, res) {
 
     const customer = await stripe.customers.create(customerData);
 
-    // Cria a sessão de checkout utilizando o customer já preenchido
+    // Cria a sessão de pagamento vinculada ao cliente recém-criado
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -97,7 +96,7 @@ export default async function handler(req, res) {
       ],
       mode: 'subscription',
       client_reference_id: finalUserId,
-      customer: customer.id, // Vincula a sessão ao cliente com os dados fiscais do Brasil
+      customer: customer.id,
       success_url: `${req.headers.origin || 'https://meucontrolefinanceiro.vercel.app'}/?payment=success`,
       cancel_url: `${req.headers.origin || 'https://meucontrolefinanceiro.vercel.app'}/?payment=cancelled`,
     });

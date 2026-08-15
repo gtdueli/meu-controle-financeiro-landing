@@ -22,8 +22,7 @@
     h1 { font-size: 2.75rem; color: #fff; margin-top: 20px; font-weight: 800; line-height: 1.2; }
     h1 span { color: #34d399; }
     .subtitle { color: #94a3b8; font-size: 1.125rem; margin-top: 20px; max-width: 700px; margin-left: auto; margin-right: auto; }
-.cta-btn { 
-  display: inline-block; background: #10b981; color: #022c22; font-weight: bold; padding: 16px 32px; border-radius: 12px; text-decoration: none; margin-top: 30px; font-size: 1.125rem; transition: 0.2s; position: relative;z-index: 10;}
+    .cta-btn { display: inline-block; background: #10b981; color: #022c22; font-weight: bold; padding: 16px 32px; border-radius: 12px; text-decoration: none; margin-top: 30px; font-size: 1.125rem; transition: 0.2s; position: relative; z-index: 10; }
 
     /* Mockup/Imagem */
     .mockup-container { max-width: 900px; margin: 50px auto 0; background: rgba(30, 41, 59, 0.5); border: 1px solid #334155; padding: 12px; border-radius: 16px; }
@@ -41,7 +40,7 @@
     .card h3 { color: #fff; margin-bottom: 8px; font-size: 1.25rem; }
     .card p { color: #94a3b8; font-size: 0.875rem; }
 
-    /* Pricing */
+    /* Pricing & Checkout Form */
     .pricing-section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; margin-top: 40px; }
     .price-card { background: #0f172a; border: 1px solid #1e293b; padding: 32px; border-radius: 16px; display: flex; flex-direction: column; justify-content: space-between; }
@@ -52,7 +51,14 @@
     .price-sub { font-size: 0.75rem; color: #34d399; }
     .price-list { list-style: none; margin: 24px 0; }
     .price-list li { color: #cbd5e1; font-size: 0.875rem; margin-bottom: 12px; }
-    .btn-plan { display: block; text-align: center; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; transition: 0.2s; }
+    
+    /* Campos de Cadastro Fiscal */
+    .billing-form { margin-top: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
+    .billing-form input { background: #020617; border: 1px solid #334155; color: #fff; padding: 10px 12px; border-radius: 8px; font-size: 0.875rem; width: 100%; }
+    .billing-form input:focus { border-color: #10b981; outline: none; }
+    .form-row { display: flex; gap: 10px; }
+
+    .btn-plan { display: block; text-align: center; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; transition: 0.2s; border: none; cursor: pointer; width: 100%; font-size: 1rem; }
     .btn-plan-normal { background: #1e293b; color: #fff; }
     .btn-plan-normal:hover { background: #334155; }
     .btn-plan-featured { background: #10b981; color: #022c22; }
@@ -146,7 +152,7 @@
   <section id="planos" class="pricing-section">
     <div class="section-title">
       <h2>Escolha o plano ideal para você</h2>
-      <p>Acesso imediato a todos os recursos sem restrições.</p>
+      <p>Preencha seus dados abaixo para iniciar a assinatura com segurança.</p>
     </div>
 
     <div class="grid-2">
@@ -156,6 +162,20 @@
           <h3 style="color: #fff;">Plano Mensal</h3>
           <p style="color: #94a3b8; font-size: 0.875rem;">Flexibilidade total mês a mês</p>
           <div class="price">R$ 19,90 <span>/mês</span></div>
+          
+          <div class="billing-form" id="form-monthly">
+            <input type="email" id="email-monthly" placeholder="Seu e-mail de acesso" required />
+            <input type="password" id="password-monthly" placeholder="Crie uma senha de acesso" required />
+            <input type="text" id="name-monthly" placeholder="Nome Completo" required />
+            <input type="text" id="cpf-monthly" placeholder="CPF (somente números)" maxlength="14" required />
+            <input type="text" id="street-monthly" placeholder="Rua / Número" required />
+            <div class="form-row">
+              <input type="text" id="city-monthly" placeholder="Cidade" required />
+              <input type="text" id="state-monthly" placeholder="UF" maxlength="2" required />
+            </div>
+            <input type="text" id="zipCode-monthly" placeholder="CEP" maxlength="8" required />
+          </div>
+
           <ul class="price-list">
             <li>✓ Importação de extratos .OFX e .CSV</li>
             <li>✓ Agendamentos de contas com alertas</li>
@@ -164,7 +184,7 @@
             <li>✓ Modo Privacidade (Mostrar/Ocultar)</li>
           </ul>
         </div>
-        <a href="https://buy.stripe.com/test_aFa6oI8z17X3f51dEW5Rm00" class="btn-plan btn-plan-normal">Assinar Plano Mensal</a>
+        <button type="button" onclick="iniciarCheckout('monthly')" class="btn-plan btn-plan-normal">Assinar Plano Mensal</button>
       </div>
 
       <!-- PLANO ANUAL -->
@@ -175,6 +195,20 @@
           <p style="color: #94a3b8; font-size: 0.875rem;">Economize no plano de longo prazo</p>
           <div class="price">R$ 179,90 <span>/ano</span></div>
           <p class="price-sub">Equivale a apenas R$ 14,99/mês</p>
+          
+          <div class="billing-form" id="form-yearly">
+            <input type="email" id="email-yearly" placeholder="Seu e-mail de acesso" required />
+            <input type="password" id="password-yearly" placeholder="Crie uma senha de acesso" required />
+            <input type="text" id="name-yearly" placeholder="Nome Completo" required />
+            <input type="text" id="cpf-yearly" placeholder="CPF (somente números)" maxlength="14" required />
+            <input type="text" id="street-yearly" placeholder="Rua / Número" required />
+            <div class="form-row">
+              <input type="text" id="city-yearly" placeholder="Cidade" required />
+              <input type="text" id="state-yearly" placeholder="UF" maxlength="2" required />
+            </div>
+            <input type="text" id="zipCode-yearly" placeholder="CEP" maxlength="8" required />
+          </div>
+
           <ul class="price-list">
             <li>✓ Todos os recursos liberados sem restrição</li>
             <li>✓ Desconto exclusivo no plano anual</li>
@@ -183,7 +217,7 @@
             <li>✓ Suporte prioritário e atualizações</li>
           </ul>
         </div>
-        <a href="https://buy.stripe.com/test_4gMbJ2aH9gtzg951We5Rm01" class="btn-plan btn-plan-featured">Assinar Plano Anual</a>
+        <button type="button" onclick="iniciarCheckout('yearly')" class="btn-plan btn-plan-featured">Assinar Plano Anual</button>
       </div>
     </div>
   </section>
@@ -212,6 +246,60 @@
   <footer>
     <p>© 2026 Meu Controle Financeiro. Todos os direitos reservados.</p>
   </footer>
+
+  <!-- SCRIPT DE INTEGRAÇÃO COM A API -->
+  <script>
+    async function iniciarCheckout(planType) {
+      const email = document.getElementById(`email-${planType}`).value;
+      const password = document.getElementById(`password-${planType}`).value;
+      const name = document.getElementById(`name-${planType}`).value;
+      const cpf = document.getElementById(`cpf-${planType}`).value;
+      const street = document.getElementById(`street-${planType}`).value;
+      const city = document.getElementById(`city-${planType}`).value;
+      const state = document.getElementById(`state-${planType}`).value;
+      const zipCode = document.getElementById(`zipCode-${planType}`).value;
+
+      if (!email || !password || !name || !cpf || !street || !city || !state || !zipCode) {
+        alert('Por favor, preencha todos os campos cadastrais e fiscais antes de continuar.');
+        return;
+      }
+
+      const btn = event.target;
+      const originalText = btn.innerText;
+      btn.innerText = 'Processando...';
+      btn.disabled = true;
+
+      try {
+        const response = await fetch('/api/create-checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email,
+            password,
+            plan: planType,
+            name,
+            cpf,
+            address: { street, city, state, zipCode }
+          })
+        });
+
+        const data = await response.json();
+        
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          alert('Erro ao criar sessão de pagamento: ' + (data.error || 'Erro desconhecido'));
+          btn.innerText = originalText;
+          btn.disabled = false;
+        }
+      } catch (err) {
+        console.error('Erro:', err);
+        alert('Ocorreu um erro de conexão ao tentar processar o pagamento.');
+        btn.innerText = originalText;
+        btn.disabled = false;
+      }
+    }
+  </script>
 
 </body>
 </html>
