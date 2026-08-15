@@ -64,7 +64,6 @@ export default async function handler(req, res) {
     }
 
     const session = await stripe.checkout.sessions.create({
-      // Adicionando 'pix' aqui. O Stripe priorizará os métodos configurados na sua conta.
       payment_method_types: ['card'],
       line_items: [
         {
@@ -75,6 +74,13 @@ export default async function handler(req, res) {
       mode: 'subscription',
       client_reference_id: finalUserId,
       customer_email: email,
+      
+      // Coleta obrigatória de endereço e CPF/CNPJ para adequação fiscal no Brasil
+      billing_address_collection: 'required',
+      tax_id_collection: {
+        enabled: true,
+      },
+
       success_url: `${req.headers.origin || 'https://meucontrolefinanceiro.vercel.app'}/?payment=success`,
       cancel_url: `${req.headers.origin || 'https://meucontrolefinanceiro.vercel.app'}/?payment=cancelled`,
     });
