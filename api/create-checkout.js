@@ -75,8 +75,10 @@ export default async function handler(req, res) {
       client_reference_id: finalUserId,
       customer_email: email,
       
-      // Coleta obrigatória de endereço e CPF/CNPJ para adequação fiscal no Brasil
+      // Ajuste obrigatório para forçar a coleta de endereço de cobrança
       billing_address_collection: 'required',
+
+      // Habilita explicitamente a coleta do CPF/CNPJ (ID fiscal)
       tax_id_collection: {
         enabled: true,
       },
