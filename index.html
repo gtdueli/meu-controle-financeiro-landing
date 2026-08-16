@@ -166,7 +166,7 @@
           <div class="billing-form" id="form-monthly">
             <input type="email" id="email-monthly" placeholder="Seu e-mail de acesso" readonly onfocus="this.removeAttribute('readonly');" required />
             <input type="text" id="password-monthly" placeholder="Crie uma senha de acesso" readonly onfocus="this.removeAttribute('readonly'); if(this.type==='text') this.type='password';" required />
-            <input type="text" id="name-monthly" placeholder="Nome Completo" readonly onfocus="this.removeAttribute('readonly');" required />
+            <input type="text" id="name-monthly" placeholder="Nome Completo" oninput="this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '')" readonly onfocus="this.removeAttribute('readonly');" required />
             <input type="text" id="cpf-monthly" placeholder="CPF (somente números)" maxlength="11" oninput="this.value = this.value.replace(/\D/g, '')" readonly onfocus="this.removeAttribute('readonly');" required />
             <input type="text" id="street-monthly" placeholder="Rua / Número" readonly onfocus="this.removeAttribute('readonly');" required />
             <div class="form-row">
@@ -199,7 +199,7 @@
           <div class="billing-form" id="form-yearly">
             <input type="email" id="email-yearly" placeholder="Seu e-mail de acesso" readonly onfocus="this.removeAttribute('readonly');" required />
             <input type="text" id="password-yearly" placeholder="Crie uma senha de acesso" readonly onfocus="this.removeAttribute('readonly'); if(this.type==='text') this.type='password';" required />
-            <input type="text" id="name-yearly" placeholder="Nome Completo" readonly onfocus="this.removeAttribute('readonly');" required />
+            <input type="text" id="name-yearly" placeholder="Nome Completo" oninput="this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '')" readonly onfocus="this.removeAttribute('readonly');" required />
             <input type="text" id="cpf-yearly" placeholder="CPF (somente números)" maxlength="11" oninput="this.value = this.value.replace(/\D/g, '')" readonly onfocus="this.removeAttribute('readonly');" required />
             <input type="text" id="street-yearly" placeholder="Rua / Número" readonly onfocus="this.removeAttribute('readonly');" required />
             <div class="form-row">
