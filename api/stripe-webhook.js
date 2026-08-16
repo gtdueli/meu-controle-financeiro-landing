@@ -56,10 +56,28 @@ export default async function handler(req, res) {
       const stripeCustomerId = session.customer;
       const stripeSubscriptionId = session.subscription;
 
+      // Busca os metadados salvos no cliente Stripe (onde gravamos os termos)
+      let termosAceitos = false;
+      let termosAceitosEm = null;
+
+      if (stripeCustomerId) {
+        try {
+          const customer = await stripe.customers.retrieve(stripeCustomerId);
+          if (customer && customer.metadata) {
+            termosAceitos = customer.metadata.termos_aceitos === 'true';
+            termosAceitosEm = customer.metadata.termos_aceitos_em || new Date().toISOString();
+          }
+        } catch (errCust) {
+          console.error('Erro ao buscar metadados do cliente no Stripe:', errCust);
+        }
+      }
+
       const updateData = {
         stripe_customer_id: stripeCustomerId,
         stripe_subscription_id: stripeSubscriptionId,
         status: 'active',
+        termos_aceitos: termosAceitos,
+        termos_aceitos_em: termosAceitosEm,
         updated_at: new Date(),
       };
 
@@ -81,7 +99,7 @@ export default async function handler(req, res) {
       if (error) {
         console.error('Erro ao atualizar subscriptions no Supabase:', error);
       } else {
-        console.log(`Assinatura ativada com sucesso para: ${userId || userEmail}`);
+        console.log(`Assinatura e termos ativados com sucesso para: ${userId || userEmail}`);
       }
       break;
     }

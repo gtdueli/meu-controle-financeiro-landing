@@ -26,7 +26,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Método não permitido' });
   }
 
-  const { email, password, userId, plan, name, cpf, address } = req.body;
+  // Recebe também o parâmetro termos_aceitos do front-end
+  const { email, password, userId, plan, name, cpf, address, termos_aceitos } = req.body;
 
   try {
     let finalUserId = userId;
@@ -63,7 +64,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'ID de preço do Stripe não configurado para este plano.' });
     }
 
-    // Monta o objeto do cliente no Stripe com os dados fiscais e os Metadados
+    // Monta o objeto do cliente no Stripe com os dados fiscais e os Metadados (incluindo o aceite)
     const customerData = {
       email: email,
       name: name || undefined,
@@ -73,7 +74,9 @@ export default async function handler(req, res) {
         street: address?.street || '',
         city: address?.city || '',
         state: address?.state || '',
-        zipCode: address?.zipCode || ''
+        zipCode: address?.zipCode || '',
+        termos_aceitos: termos_aceitos ? 'true' : 'false',
+        termos_aceitos_em: new Date().toISOString()
       }
     };
 

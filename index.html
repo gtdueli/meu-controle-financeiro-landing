@@ -53,10 +53,17 @@
     .price-list li { color: #cbd5e1; font-size: 0.875rem; margin-bottom: 12px; }
     
     /* Campos de Cadastro Fiscal */
-    .billing-form { margin-top: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
+    .billing-form { margin-top: 20px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; }
     .billing-form input { background: #020617; border: 1px solid #334155; color: #fff; padding: 10px 12px; border-radius: 8px; font-size: 0.875rem; width: 100%; }
     .billing-form input:focus { border-color: #10b981; outline: none; }
     .form-row { display: flex; gap: 10px; }
+
+    /* Termos de Aceite */
+    .terms-box { margin-bottom: 20px; text-align: left; }
+    .terms-label { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; color: #cbd5e1; font-size: 0.8rem; line-height: 1.4; }
+    .terms-label input { margin-top: 2px; cursor: pointer; accent-color: #10b981; }
+    .terms-label a { color: #34d399; text-decoration: none; }
+    .terms-label a:hover { text-decoration: underline; }
 
     .btn-plan { display: block; text-align: center; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; transition: 0.2s; border: none; cursor: pointer; width: 100%; font-size: 1rem; }
     .btn-plan-normal { background: #1e293b; color: #fff; }
@@ -176,6 +183,14 @@
             <input type="text" id="zipCode-monthly" placeholder="CEP (somente números)" maxlength="8" oninput="this.value = this.value.replace(/\D/g, '')" readonly onfocus="this.removeAttribute('readonly');" required />
           </div>
 
+          <!-- Caixa de Aceite Mensal -->
+          <div class="terms-box">
+            <label class="terms-label">
+              <input type="checkbox" id="terms-monthly" required />
+              <span>Li e concordo com os <a href="termos.html" target="_blank">Termos de Uso</a> e a <a href="privacidade.html" target="_blank">Política de Privacidade</a>.</span>
+            </label>
+          </div>
+
           <ul class="price-list">
             <li>✓ Importação de extratos .OFX e .CSV</li>
             <li>✓ Agendamentos de contas com alertas</li>
@@ -207,6 +222,14 @@
               <input type="text" id="state-yearly" placeholder="UF" maxlength="2" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '').toUpperCase()" readonly onfocus="this.removeAttribute('readonly');" required />
             </div>
             <input type="text" id="zipCode-yearly" placeholder="CEP (somente números)" maxlength="8" oninput="this.value = this.value.replace(/\D/g, '')" readonly onfocus="this.removeAttribute('readonly');" required />
+          </div>
+
+          <!-- Caixa de Aceite Anual -->
+          <div class="terms-box">
+            <label class="terms-label">
+              <input type="checkbox" id="terms-yearly" required />
+              <span>Li e concordo com os <a href="termos.html" target="_blank">Termos de Uso</a> e a <a href="privacidade.html" target="_blank">Política de Privacidade</a>.</span>
+            </label>
           </div>
 
           <ul class="price-list">
@@ -258,9 +281,15 @@
       const city = document.getElementById(`city-${planType}`).value;
       const state = document.getElementById(`state-${planType}`).value;
       const zipCode = document.getElementById(`zipCode-${planType}`).value;
+      const termsChecked = document.getElementById(`terms-${planType}`).checked;
 
       if (!email || !password || !name || !cpf || !street || !city || !state || !zipCode) {
         alert('Por favor, preencha todos os campos cadastrais e fiscais antes de continuar.');
+        return;
+      }
+
+      if (!termsChecked) {
+        alert('Você precisa aceitar os Termos de Uso e a Política de Privacidade para continuar.');
         return;
       }
 
@@ -279,7 +308,8 @@
             plan: planType,
             name,
             cpf,
-            address: { street, city, state, zipCode }
+            address: { street, city, state, zipCode },
+            termos_aceitos: true
           })
         });
 
