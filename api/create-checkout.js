@@ -63,10 +63,18 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'ID de preço do Stripe não configurado para este plano.' });
     }
 
-    // Monta o objeto do cliente no Stripe com os dados fiscais do Brasil
+    // Monta o objeto do cliente no Stripe com os dados fiscais e os Metadados
     const customerData = {
       email: email,
       name: name || undefined,
+      metadata: {
+        nome: name || '',
+        cpf: cpf || '',
+        street: address?.street || '',
+        city: address?.city || '',
+        state: address?.state || '',
+        zipCode: address?.zipCode || ''
+      }
     };
 
     if (cpf) {
