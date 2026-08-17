@@ -42,6 +42,16 @@
     .card h3 { color: #fff; margin-bottom: 8px; font-size: 1.25rem; }
     .card p { color: #94a3b8; font-size: 0.875rem; }
 
+    /* Depoimentos */
+    .testimonials-section { padding: 80px 20px; background: #0f172a; border-bottom: 1px solid #1e293b; }
+    .testimonial-card { background: #020617; border: 1px solid #1e293b; padding: 30px; border-radius: 16px; display: flex; flex-direction: column; justify-content: space-between; }
+    .testimonial-text { color: #cbd5e1; font-size: 0.95rem; margin-bottom: 20px; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar { width: 45px; height: 45px; background: #1e293b; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #34d399; border: 1px solid #334155; }
+    .author-info h4 { color: #fff; font-size: 0.95rem; }
+    .author-info p { color: #94a3b8; font-size: 0.75rem; }
+    .stars { color: #f59e0b; margin-bottom: 12px; font-size: 0.875rem; }
+
     /* Pricing & Checkout Form */
     .pricing-section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; margin-top: 40px; }
@@ -108,7 +118,7 @@
 
     <!-- MOCKUP / PRINT DO APP -->
     <div class="mockup-container">
-     <div class="mockup-box">
+      <div class="mockup-box">
         <img src="print.png" alt="Demonstração do Sistema">
       </div>
     </div>
@@ -156,6 +166,58 @@
         <div class="card-icon">📱</div>
         <h3>Celular e Computador</h3>
         <p>Sua conta sincronizada na nuvem com segurança máxima. Acesse pelo navegador de qualquer dispositivo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section class="testimonials-section">
+    <div class="section-title">
+      <h2>O que dizem nossos usuários</h2>
+      <p>Histórias reais de quem organizou as finanças e recuperou a tranquilidade.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="testimonial-card">
+        <div>
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"A importação por arquivo OFX facilitou demais a minha vida. Antes eu perdia horas digitando extrato bancário, agora resolvo tudo em segundos."</p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">CM</div>
+          <div class="author-info">
+            <h4>Carlos Mendes</h4>
+            <p>Engenheiro de Automação</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div>
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Os alertas de contas a vencer me salvaram várias vezes de pagar juros por esquecimento. O visual limpo e os gráficos por categoria são excelentes."</p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">JS</div>
+          <div class="author-info">
+            <h4>Juliana Souza</h4>
+            <p>Arquiteta & Designer</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div>
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Simples, direto ao ponto e muito seguro. Poder exportar para Excel do jeito que preciso e usar o modo privacidade faz toda a diferença."</p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">RL</div>
+          <div class="author-info">
+            <h4>Rafael Lima</h4>
+            <p>Analista de Sistemas</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -266,7 +328,7 @@
       </div>
       <div class="faq-item">
         <h3>Como recebo o acesso após a compra?</h3>
-        <p>Assim que o pagamento for confirmado no Stripe, você já pode acessar o sistema imediatamente, pelo botão "Acessar Minha Conta" na página principal de assinatura, usando os dados que você cadastrou</p>
+        <p>Assim que o pagamento for confirmado no Stripe, você já pode acessar o sistema imediatamente, pelo botão "Acessar Minha Conta" na página principal de assinatura, usando os dados que você cadastrou.</p>
       </div>
     </div>
   </section>
