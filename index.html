@@ -1,335 +1,499 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meu Controle Financeiro | Simplifique Suas Finanças</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-    body { background-color: #0f172a; color: #f8fafc; line-height: 1.6; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Controle Financeiro | GTD Automação & Software</title>
+    <!-- Open Graph para Redes Sociais / WhatsApp -->
+    <meta property="meta:title" content="Meu Controle Financeiro | GTD Automação & Software">
+    <meta property="meta:description" content="Domine suas finanças de forma simples, automatizada e inteligente.">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    /* Header */
-    header { border-bottom: 1px solid #1e293b; background-color: rgba(15, 23, 42, 0.9); position: sticky; top: 0; z-index: 50; padding: 1rem 2rem; }
-    .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-    .logo { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 1.25rem; color: #fff; }
-    .logo-icon { background: #10b981; color: #022c22; padding: 4px 8px; border-radius: 6px; font-weight: 900; }
-    .btn-login { text-decoration: none; color: #cbd5e1; border: 1px solid #334155; padding: 8px 16px; border-radius: 8px; font-size: 0.875rem; transition: 0.2s; }
-    .btn-login:hover { border-color: #10b981; color: #fff; }
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --success: #16a34a;
+            --bg-light: #f8fafc;
+            --text-main: #334155;
+            --text-light: #64748b;
+            --white: #ffffff;
+            --border: #e2e8f0;
+        }
 
-    /* Hero */
-    .hero { max-width: 1000px; margin: 0 auto; padding: 80px 20px 40px; text-align: center; }
-    .badge { background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
-    h1 { font-size: 2.75rem; color: #fff; margin-top: 20px; font-weight: 800; line-height: 1.2; }
-    h1 span { color: #34d399; }
-    .subtitle { color: #94a3b8; font-size: 1.125rem; margin-top: 20px; max-width: 700px; margin-left: auto; margin-right: auto; }
-    .cta-btn { display: inline-block; background: #10b981; color: #022c22; font-weight: bold; padding: 16px 32px; border-radius: 12px; text-decoration: none; margin-top: 30px; font-size: 1.125rem; transition: 0.2s; position: relative; z-index: 10; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
 
-    /* Mockup/Imagem */
-    .mockup-container { max-width: 900px; margin: 50px auto 0; background: rgba(30, 41, 59, 0.5); border: 1px solid #334155; padding: 12px; border-radius: 16px; }
-    .mockup-box { background: #020617; border-radius: 10px; border: 1px solid #1e293b; padding: 40px 20px; text-align: center; min-height: 350px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    .mockup-box img { max-width: 100%; border-radius: 8px; border: 1px solid #334155; }
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
 
-    /* Features */
-    .features-section { background: #020617; border-top: 1px solid #1e293b; border-bottom: 1px solid #1e293b; padding: 80px 20px; }
-    .section-title { text-align: center; margin-bottom: 50px; }
-    .section-title h2 { font-size: 2rem; color: #fff; }
-    .section-title p { color: #94a3b8; margin-top: 8px; }
-    .grid-3 { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
-    .card { background: #0f172a; border: 1px solid #1e293b; padding: 30px; border-radius: 16px; }
-    .card-icon { font-size: 2rem; margin-bottom: 16px; }
-    .card h3 { color: #fff; margin-bottom: 8px; font-size: 1.25rem; }
-    .card p { color: #94a3b8; font-size: 0.875rem; }
+        /* HEADER / NAV */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    /* Pricing & Checkout Form */
-    .pricing-section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; }
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; margin-top: 40px; }
-    .price-card { background: #0f172a; border: 1px solid #1e293b; padding: 32px; border-radius: 16px; display: flex; flex-direction: column; justify-content: space-between; }
-    .price-card.featured { border: 2px solid #10b981; position: relative; }
-    .featured-badge { position: absolute; top: -12px; right: 20px; background: #10b981; color: #022c22; font-size: 0.75rem; font-weight: bold; padding: 2px 10px; border-radius: 12px; text-transform: uppercase; }
-    .price { font-size: 2.5rem; font-weight: 800; color: #fff; margin: 20px 0 5px; }
-    .price span { font-size: 1rem; color: #94a3b8; font-weight: normal; }
-    .price-sub { font-size: 0.75rem; color: #34d399; }
-    .price-list { list-style: none; margin: 24px 0; }
-    .price-list li { color: #cbd5e1; font-size: 0.875rem; margin-bottom: 12px; }
-    
-    /* Campos de Cadastro Fiscal */
-    .billing-form { margin-top: 20px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; }
-    .billing-form input { background: #020617; border: 1px solid #334155; color: #fff; padding: 10px 12px; border-radius: 8px; font-size: 0.875rem; width: 100%; }
-    .billing-form input:focus { border-color: #10b981; outline: none; }
-    .form-row { display: flex; gap: 10px; }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    /* Termos de Aceite */
-    .terms-box { margin-bottom: 20px; text-align: left; }
-    .terms-label { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; color: #cbd5e1; font-size: 0.8rem; line-height: 1.4; }
-    .terms-label input { margin-top: 2px; cursor: pointer; accent-color: #10b981; }
-    .terms-label a { color: #34d399; text-decoration: none; }
-    .terms-label a:hover { text-decoration: underline; }
+        .logo {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .btn-plan { display: block; text-align: center; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; transition: 0.2s; border: none; cursor: pointer; width: 100%; font-size: 1rem; }
-    .btn-plan-normal { background: #1e293b; color: #fff; }
-    .btn-plan-normal:hover { background: #334155; }
-    .btn-plan-featured { background: #10b981; color: #022c22; }
-    .btn-plan-featured:hover { background: #34d399; }
+        .logo span {
+            color: var(--accent);
+        }
 
-    /* FAQ */
-    .faq-section { background: #020617; border-top: 1px solid #1e293b; padding: 80px 20px; }
-    .faq-container { max-width: 800px; margin: 0 auto; }
-    .faq-item { background: #0f172a; border: 1px solid #1e293b; padding: 20px; border-radius: 12px; margin-bottom: 16px; }
-    .faq-item h3 { color: #fff; font-size: 1rem; margin-bottom: 8px; }
-    .faq-item p { color: #94a3b8; font-size: 0.875rem; }
+        .nav-cta {
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
 
-    footer { text-align: center; padding: 30px; border-top: 1px solid #1e293b; color: #64748b; font-size: 0.75rem; }
-  </style>
+        .nav-cta:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem 3rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content h1 span {
+            color: var(--accent);
+        }
+
+        .hero-content p {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--success);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 14px rgba(22, 163, 74, 0.3);
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #15803d;
+            transform: translateY(-2px);
+        }
+
+        .hero-badges {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .hero-badges i {
+            color: var(--success);
+            margin-right: 5px;
+        }
+
+        /* MOCKUP / PREVIEW */
+        .hero-image {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero-image img, .mockup-placeholder {
+            width: 100%;
+            height: 320px;
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .mockup-placeholder i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        /* BENEFÍCIOS / TRANSFORMAÇÃO */
+        .features {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.25rem;
+            color: var(--primary);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1.2rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* PROVA SOCIAL / DEPOIMENTOS */
+        .testimonials {
+            background-color: var(--white);
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .testimonials-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .stars {
+            color: #f59e0b;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .user-info h4 {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .user-info span {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* FAQ - PERGUNTAS FREQUENTES */
+        .faq {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            padding: 0 1.25rem 1.25rem 1.25rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .copyright {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* RESPONSIVO */
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 3rem;
+            }
+            .hero-content h1 {
+                font-size: 2.25rem;
+            }
+            .hero-badges {
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <header>
-    <div class="nav-container">
-      <div class="logo">
-        <span class="logo-icon">R$</span>
-        Meu Controle Financeiro
-      </div>
-      <a href="https://meucontrole-financeiro.vercel.app" class="btn-login">Acessar Minha Conta</a>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="hero">
-    <span class="badge">Sua vida financeira sob controle</span>
-    <h1>Organize suas finanças sem complicações e <span>tome o controle do seu dinheiro</span></h1>
-    <p class="subtitle">Importe extratos bancários (.OFX e .CSV), agende contas com alertas de vencimento, proteja sua privacidade e gere relatórios em Excel e PDF com 1 clique.</p>
-    <a href="#planos" class="cta-btn">Quero Começar Agora</a>
-
-    <!-- MOCKUP / PRINT DO APP -->
-    <div class="mockup-container">
-     <div class="mockup-box">
-        <img src="print.png" alt="Demonstração do Sistema">
-      </div>
-    </div>
-  </section>
-
-  <!-- BENEFÍCIOS -->
-  <section class="features-section">
-    <div class="section-title">
-      <h2>Recursos avançados pensados na sua rotina</h2>
-      <p>Ferramentas práticas para automatizar seus lançamentos e evitar atrasos em contas.</p>
-    </div>
-
-    <div class="grid-3">
-      <div class="card">
-        <div class="card-icon">🏦</div>
-        <h3>Importação de Extrato (.OFX / .CSV)</h3>
-        <p>Chega de digitar tudo na mão. Suba o arquivo do seu banco em formato .OFX ou .CSV e selecione as transações a importar.</p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🔔</div>
-        <h3>Contas a Vencer & Alertas</h3>
-        <p>Programe os alertas de pagamento de boletos e despesas recorrentes. Receba avisos com dias de antecedência para evitar juros.</p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🎨</div>
-        <h3>Gráfico por Categoria</h3>
-        <p>Visualize exatamente onde está gastando seu dinheiro através de exibição colorida e categorias personalizadas.</p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">📄</div>
-        <h3>Exportação Excel e PDF</h3>
-        <p>Exporte seus dados filtrados por mês ou ano tanto em planilha editável (.xlsx) quanto em relatório consolidado em PDF.</p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">👁️</div>
-        <h3>Modo Privacidade</h3>
-        <p>Acesse o sistema em locais públicos com total segurança. Oculte os saldos com o botão "Mostrar/Ocultar".</p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">📱</div>
-        <h3>Celular e Computador</h3>
-        <p>Sua conta sincronizada na nuvem com segurança máxima. Acesse pelo navegador de qualquer dispositivo.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- PLANOS E PREÇOS -->
-  <section id="planos" class="pricing-section">
-    <div class="section-title">
-      <h2>Escolha o plano ideal para você</h2>
-      <p>Preencha seus dados abaixo para iniciar a assinatura com segurança.</p>
-    </div>
-
-    <div class="grid-2">
-      <!-- PLANO MENSAL -->
-      <div class="price-card">
-        <div>
-          <h3 style="color: #fff;">Plano Mensal</h3>
-          <p style="color: #94a3b8; font-size: 0.875rem;">Flexibilidade total mês a mês</p>
-          <div class="price">R$ 19,90 <span>/mês</span></div>
-          
-          <div class="billing-form" id="form-monthly">
-            <input type="email" id="email-monthly" placeholder="Seu e-mail de acesso" readonly onfocus="this.removeAttribute('readonly');" required />
-            <input type="text" id="password-monthly" placeholder="Crie uma senha de acesso" readonly onfocus="this.removeAttribute('readonly'); if(this.type==='text') this.type='password';" required />
-            <input type="text" id="name-monthly" placeholder="Nome Completo" oninput="this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '')" readonly onfocus="this.removeAttribute('readonly');" required />
-            <input type="text" id="cpf-monthly" placeholder="CPF (somente números)" maxlength="11" oninput="this.value = this.value.replace(/\D/g, '')" readonly onfocus="this.removeAttribute('readonly');" required />
-            <input type="text" id="street-monthly" placeholder="Rua / Número" readonly onfocus="this.removeAttribute('readonly');" required />
-            <div class="form-row">
-              <input type="text" id="city-monthly" placeholder="Cidade" oninput="this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '')" readonly onfocus="this.removeAttribute('readonly');" required />
-              <input type="text" id="state-monthly" placeholder="UF" maxlength="2" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '').toUpperCase()" readonly onfocus="this.removeAttribute('readonly');" required />
-            </div>
-            <input type="text" id="zipCode-monthly" placeholder="CEP (somente números)" maxlength="8" oninput="this.value = this.value.replace(/\D/g, '')" readonly onfocus="this.removeAttribute('readonly');" required />
-          </div>
-
-          <!-- Caixa de Aceite Mensal -->
-          <div class="terms-box">
-            <label class="terms-label">
-              <input type="checkbox" id="terms-monthly" required />
-              <span>Li e concordo com os <a href="termos.html" target="_blank">Termos de Uso</a> e a <a href="privacidade.html" target="_blank">Política de Privacidade</a>.</span>
-            </label>
-          </div>
-
-          <ul class="price-list">
-            <li>✓ Importação de extratos .OFX e .CSV</li>
-            <li>✓ Agendamentos de contas com alertas</li>
-            <li>✓ Gráficos por categorias personalizadas</li>
-            <li>✓ Relatórios em Excel (.xlsx) e PDF</li>
-            <li>✓ Modo Privacidade (Mostrar/Ocultar)</li>
-          </ul>
+    <!-- HEADER -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo"><i class="fa-solid fa-chart-pie"></i> Meu Controle <span>Financeiro</span></a>
+            <a href="#planos" class="nav-cta">Começar Agora</a>
         </div>
-        <button type="button" onclick="iniciarCheckout('monthly')" class="btn-plan btn-plan-normal">Assinar Plano Mensal</button>
-      </div>
+    </header>
 
-      <!-- PLANO ANUAL -->
-      <div class="price-card featured">
-        <span class="featured-badge">Mais Vantajoso</span>
-        <div>
-          <h3 style="color: #fff;">Plano Anual</h3>
-          <p style="color: #94a3b8; font-size: 0.875rem;">Economize no plano de longo prazo</p>
-          <div class="price">R$ 179,90 <span>/ano</span></div>
-          <p class="price-sub">Equivale a apenas R$ 14,99/mês</p>
-          
-          <div class="billing-form" id="form-yearly">
-            <input type="email" id="email-yearly" placeholder="Seu e-mail de acesso" readonly onfocus="this.removeAttribute('readonly');" required />
-            <input type="text" id="password-yearly" placeholder="Crie uma senha de acesso" readonly onfocus="this.removeAttribute('readonly'); if(this.type==='text') this.type='password';" required />
-            <input type="text" id="name-yearly" placeholder="Nome Completo" oninput="this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '')" readonly onfocus="this.removeAttribute('readonly');" required />
-            <input type="text" id="cpf-yearly" placeholder="CPF (somente números)" maxlength="11" oninput="this.value = this.value.replace(/\D/g, '')" readonly onfocus="this.removeAttribute('readonly');" required />
-            <input type="text" id="street-yearly" placeholder="Rua / Número" readonly onfocus="this.removeAttribute('readonly');" required />
-            <div class="form-row">
-              <input type="text" id="city-yearly" placeholder="Cidade" oninput="this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '')" readonly onfocus="this.removeAttribute('readonly');" required />
-              <input type="text" id="state-yearly" placeholder="UF" maxlength="2" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '').toUpperCase()" readonly onfocus="this.removeAttribute('readonly');" required />
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Domine suas finanças sem complicação e <span>tome o controle</span> do seu futuro.</h1>
+            <p>Uma plataforma inteligente desenvolvida para simplificar o seu planejamento financeiro pessoal, eliminando planilhas confusas e automatizando o seu dia a dia.</p>
+            <a href="#planos" class="btn-primary"><i class="fa-solid fa-bolt"></i> Quero Organizar Minhas Finanças</a>
+            <div class="hero-badges">
+                <span><i class="fa-solid fa-check"></i> Acesso Imediato</span>
+                <span><i class="fa-solid fa-shield-halved"></i> Garantia de 7 Dias</span>
             </div>
-            <input type="text" id="zipCode-yearly" placeholder="CEP (somente números)" maxlength="8" oninput="this.value = this.value.replace(/\D/g, '')" readonly onfocus="this.removeAttribute('readonly');" required />
-          </div>
-
-          <!-- Caixa de Aceite Anual -->
-          <div class="terms-box">
-            <label class="terms-label">
-              <input type="checkbox" id="terms-yearly" required />
-              <span>Li e concordo com os <a href="termos.html" target="_blank">Termos de Uso</a> e a <a href="privacidade.html" target="_blank">Política de Privacidade</a>.</span>
-            </label>
-          </div>
-
-          <ul class="price-list">
-            <li>✓ Todos os recursos liberados sem restrição</li>
-            <li>✓ Desconto exclusivo no plano anual</li>
-            <li>✓ Importação ilimitada de extratos</li>
-            <li>✓ Exportação de relatórios Excel e PDF</li>
-            <li>✓ Suporte prioritário e atualizações</li>
-          </ul>
         </div>
-        <button type="button" onclick="iniciarCheckout('yearly')" class="btn-plan btn-plan-featured">Assinar Plano Anual</button>
-      </div>
-    </div>
-  </section>
+        <div class="hero-image">
+            <!-- Caso queira trocar por uma imagem real depois, substitua a div abaixo por uma tag <img src="sua-imagem.png" alt="Painel"> -->
+            <div class="mockup-placeholder">
+                <i class="fa-solid fa-laptop-code"></i>
+                Painel Moderno & Intuitivo
+            </div>
+        </div>
+    </section>
 
-  <!-- FAQ -->
-  <section class="faq-section">
-    <div class="section-title">
-      <h2>Perguntas Frequentes</h2>
-    </div>
-    <div class="faq-container">
-      <div class="faq-item">
-        <h3>Como funciona a importação de extrato bancário?</h3>
-        <p>Você baixa o arquivo de extrato (.OFX ou .CSV) no seu banco e envia para o sistema. O app lê as transações e você escolhe o que salvar.</p>
-      </div>
-      <div class="faq-item">
-        <h3>Como funcionam os alertas de contas a vencer?</h3>
-        <p>Você cadastra suas contas futuras e define os dias de antecedência. O sistema avisa sobre os vencimentos próximos.</p>
-      </div>
-      <div class="faq-item">
-        <h3>Como recebo o acesso após a compra?</h3>
-        <p>Assim que o pagamento for confirmado no Stripe, você já pode acessar o sistema imediatamente, pelo botão "Acessar Minha Conta" na página principal de assinatura, usando os dados que você cadastrou</p>
-      </div>
-    </div>
-  </section>
+    <!-- BENEFÍCIOS -->
+    <section class="features">
+        <div class="section-title">
+            <h2>Por que escolher o Meu Controle Financeiro?</h2>
+            <p>Tudo o que você precisa para gerenciar entradas, saídas e metas em um só lugar.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <h3>Simplicidade e Praticidade</h3>
+                <p>Interface limpa e intuitiva projetada para que você registre seus lançamentos em segundos, sem burocracia.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <h3>Visão Clara e Gráficos</h3>
+                <p>Acompanhe para onde vai o seu dinheiro através de relatórios e indicadores visuais claros e diretos ao ponto.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-lock"></i></div>
+                <h3>Segurança de Dados</h3>
+                <p>Seus dados protegidos com padrões modernos de segurança na nuvem, garantindo total privacidade e confiabilidade.</p>
+            </div>
+        </div>
+    </section>
 
-  <footer>
-    <p>© 2026 Meu Controle Financeiro. Todos os direitos reservados.</p>
-  </footer>
+    <!-- PROVA SOCIAL / DEPOIMENTOS -->
+    <section class="testimonials">
+        <div class="section-title" style="margin-bottom: 2rem;">
+            <h2>O que dizem nossos usuários</h2>
+            <p>Histórias reais de quem transformou a relação com o dinheiro.</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p>"Antes eu perdia horas tentando entender para onde ia meu salário. Com a plataforma, consigo ver meus gastos em minutos e planejar minhas economias com clareza."</p>
+                <div class="user-info">
+                    <h4>Lucas Mendes</h4>
+                    <span>Engenheiro de Software</span>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p>"Ferramenta extremamente leve e direta. Não tem curva de aprendizagem difícil, abri e já comecei a usar no mesmo dia. Recomendo muito!"</p>
+                <div class="user-info">
+                    <h4>Camila Souza</h4>
+                    <span>Arquiteta e Empreendedora</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- SCRIPT DE INTEGRAÇÃO COM A API -->
-  <script>
-    async function iniciarCheckout(planType) {
-      const email = document.getElementById(`email-${planType}`).value;
-      const password = document.getElementById(`password-${planType}`).value;
-      const name = document.getElementById(`name-${planType}`).value;
-      const cpf = document.getElementById(`cpf-${planType}`).value;
-      const street = document.getElementById(`street-${planType}`).value;
-      const city = document.getElementById(`city-${planType}`).value;
-      const state = document.getElementById(`state-${planType}`).value;
-      const zipCode = document.getElementById(`zipCode-${planType}`).value;
-      const termsChecked = document.getElementById(`terms-${planType}`).checked;
+    <!-- FAQ -->
+    <section class="faq" id="planos">
+        <div class="section-title">
+            <h2>Perguntas Frequentes</h2>
+            <p>Tire suas dúvidas antes de dar o próximo passo rumo à sua liberdade financeira.</p>
+        </div>
 
-      if (!email || !password || !name || !cpf || !street || !city || !state || !zipCode) {
-        alert('Por favor, preencha todos os campos cadastrais e fiscais antes de continuar.');
-        return;
-      }
+        <div class="faq-item">
+            <div class="faq-question">Preciso ter conhecimento avançado em informática? <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="faq-answer">Não! A plataforma foi desenvolvida com foco total em usabilidade (UX). Qualquer pessoa consegue navegar e registrar suas finanças de forma natural e guiada.</div>
+        </div>
 
-      if (!termsChecked) {
-        alert('Você precisa aceitar os Termos de Uso e a Política de Privacidade para continuar.');
-        return;
-      }
+        <div class="faq-item">
+            <div class="faq-question">Como recebo o acesso após a compra? <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="faq-answer">Assim que o pagamento for aprovado, você receberá automaticamente as credenciais de acesso diretamente no seu e-mail cadastrado.</div>
+        </div>
 
-      const btn = event.target;
-      const originalText = btn.innerText;
-      btn.innerText = 'Processando...';
-      btn.disabled = true;
+        <div class="faq-item">
+            <div class="faq-question">Existe garantia de reembolso? <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="faq-answer">Sim! Oferecemos 7 dias de garantia incondicional. Se você achar que a ferramenta não atendeu às suas expectativas, basta solicitar o reembolso.</div>
+        </div>
+    </section>
 
-      try {
-        const response = await fetch('/api/create-checkout', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email,
-            password,
-            plan: planType,
-            name,
-            cpf,
-            address: { street, city, state, zipCode },
-            termos_aceitos: true
-          })
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="termos.html">Termos de Uso</a>
+                <a href="privacidade.html">Política de Privacidade</a>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Meu Controle Financeiro — Operado sob a razão social/nome fantasia <strong>GTD Automação & Software</strong>. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPT SIMPLES PARA O FAQ -->
+    <script>
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
         });
-
-        const data = await response.json();
-        
-        if (data.url) {
-          window.location.href = data.url;
-        } else {
-          alert('Erro ao criar sessão de pagamento: ' + (data.error || 'Erro desconhecido'));
-          btn.innerText = originalText;
-          btn.disabled = false;
-        }
-      } catch (err) {
-        console.error('Erro:', err);
-        alert('Ocorreu um erro de conexão ao tentar processar o pagamento.');
-        btn.innerText = originalText;
-        btn.disabled = false;
-      }
-    }
-  </script>
-
+    </script>
 </body>
 </html>
