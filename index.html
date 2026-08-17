@@ -23,8 +23,16 @@
     h1 { font-size: 2.75rem; color: #fff; margin-top: 20px; font-weight: 800; line-height: 1.2; }
     h1 span { color: #34d399; }
     .subtitle { color: #94a3b8; font-size: 1.125rem; margin-top: 20px; max-width: 700px; margin-left: auto; margin-right: auto; }
-    .cta-btn { display: inline-block; background: #10b981; color: #022c22; font-weight: bold; padding: 16px 32px; border-radius: 12px; text-decoration: none; margin-top: 30px; font-size: 1.125rem; transition: 0.2s; position: relative; z-index: 10; }
+    
+    .cta-wrapper { display: inline-block; margin-top: 30px; position: relative; z-index: 10; }
+    .cta-btn { display: inline-block; background: #10b981; color: #022c22; font-weight: bold; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-size: 1.125rem; transition: 0.2s; }
     .cta-btn:hover { background: #34d399; }
+    
+    /* Selos de Confiança abaixo do Botão */
+    .hero-trust-badges { display: flex; justify-content: center; gap: 24px; margin-top: 12px; color: #94a3b8; font-size: 0.875rem; align-items: center; }
+    .trust-item { display: flex; align-items: center; gap: 6px; }
+    .trust-item span.check { color: #10b981; font-weight: bold; }
+    .trust-item span.shield { color: #10b981; }
 
     /* Mockup/Imagem */
     .mockup-container { max-width: 900px; margin: 50px auto 0; background: rgba(30, 41, 59, 0.5); border: 1px solid #334155; padding: 12px; border-radius: 16px; }
@@ -83,12 +91,61 @@
     .btn-plan-featured { background: #10b981; color: #022c22; }
     .btn-plan-featured:hover { background: #34d399; }
 
-    /* FAQ */
+    /* FAQ Estilo Acordeon */
     .faq-section { background: #020617; border-top: 1px solid #1e293b; padding: 80px 20px; }
     .faq-container { max-width: 800px; margin: 0 auto; }
-    .faq-item { background: #0f172a; border: 1px solid #1e293b; padding: 20px; border-radius: 12px; margin-bottom: 16px; }
-    .faq-item h3 { color: #fff; font-size: 1rem; margin-bottom: 8px; }
-    .faq-item p { color: #94a3b8; font-size: 0.875rem; }
+    
+    .faq-item { 
+      background: #0f172a; 
+      border: 1px solid #1e293b; 
+      border-radius: 12px; 
+      margin-bottom: 16px; 
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .faq-item:hover { border-color: #334155; }
+    
+    .faq-question { 
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 20px;
+      text-align: left;
+      color: #fff; 
+      font-size: 1rem; 
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    
+    .faq-question svg {
+      width: 20px;
+      height: 20px;
+      stroke: #94a3b8;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+    
+    .faq-item.active .faq-question svg {
+      transform: rotate(180deg);
+      stroke: #34d399;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 20px;
+      color: #94a3b8; 
+      font-size: 0.875rem;
+    }
+    
+    .faq-item.active .faq-answer {
+      max-height: 200px;
+      padding-bottom: 20px;
+    }
 
     footer { text-align: center; padding: 30px; border-top: 1px solid #1e293b; color: #64748b; font-size: 0.75rem; }
   </style>
@@ -114,7 +171,14 @@
     <span class="badge">Sua vida financeira sob controle</span>
     <h1>Organize suas finanças sem complicações e <span>tome o controle do seu dinheiro</span></h1>
     <p class="subtitle">Importe extratos bancários (.OFX e .CSV), agende contas com alertas de vencimento, proteja sua privacidade e gere relatórios em Excel e PDF com 1 clique.</p>
-    <a href="#planos" class="cta-btn">Quero Começar Agora</a>
+    
+    <div class="cta-wrapper">
+      <a href="#planos" class="cta-btn">Quero Organizar Minhas Finanças</a>
+      <div class="hero-trust-badges">
+        <div class="trust-item"><span class="check">✓</span> Acesso Imediato</div>
+        <div class="trust-item"><span class="shield">🛡️</span> Garantia de 7 Dias</div>
+      </div>
+    </div>
 
     <!-- MOCKUP / PRINT DO APP -->
     <div class="mockup-container">
@@ -316,20 +380,61 @@
   <section class="faq-section">
     <div class="section-title">
       <h2>Perguntas Frequentes</h2>
+      <p>Tire suas dúvidas antes de dar o próximo passo rumo à sua liberdade financeira.</p>
     </div>
+    
     <div class="faq-container">
+      
       <div class="faq-item">
-        <h3>Como funciona a importação de extrato bancário?</h3>
-        <p>Você baixa o arquivo de extrato (.OFX ou .CSV) no seu banco e envia para o sistema. O app lê as transações e você escolhe o que salvar.</p>
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Preciso ter conhecimento avançado em informática?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>Não! O sistema foi desenvolvido com foco total na facilidade de uso e na experiência do usuário. Qualquer pessoa consegue navegar, cadastrar despesas e importar extratos sem dificuldades.</p>
+        </div>
       </div>
+
       <div class="faq-item">
-        <h3>Como funcionam os alertas de contas a vencer?</h3>
-        <p>Você cadastra suas contas futuras e define os dias de antecedência. O sistema avisa sobre os vencimentos próximos.</p>
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Como recebo o acesso após a compra?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>Assim que o pagamento for confirmado no Stripe, você já pode acessar o sistema imediatamente pelo botão "Acessar Minha Conta" na página principal, utilizando o e-mail e a senha que você cadastrou no formulário.</p>
+        </div>
       </div>
+
       <div class="faq-item">
-        <h3>Como recebo o acesso após a compra?</h3>
-        <p>Assim que o pagamento for confirmado no Stripe, você já pode acessar o sistema imediatamente, pelo botão "Acessar Minha Conta" na página principal de assinatura, usando os dados que você cadastrou.</p>
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Existe garantia de reembolso?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>Sim! Oferecemos garantia incondicional de 7 dias. Se você não ficar satisfeito com a plataforma ou achar que ela não atende às suas necessidades, basta solicitar o reembolso e devolveremos 100% do seu dinheiro.</p>
+        </div>
       </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Como funciona a importação de extrato bancário?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>Você baixa o arquivo de extrato (.OFX ou .CSV) diretamente no aplicativo ou site do seu banco e envia para o sistema. O app lê as transações automaticamente e você seleciona o que deseja salvar.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Como funcionam os alertas de contas a vencer?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p>Você cadastra suas contas futuras e define os dias de antecedência desejados. O sistema avisa prontamente sobre os vencimentos próximos para que você nunca mais pague juros por atraso.</p>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -337,8 +442,25 @@
     <p>© 2026 Meu Controle Financeiro. Todos os direitos reservados.</p>
   </footer>
 
-  <!-- SCRIPT DE INTEGRAÇÃO COM A API -->
+  <!-- SCRIPTS -->
   <script>
+    // Script do Acordeão do FAQ
+    function toggleFaq(button) {
+      const item = button.parentElement;
+      const isActive = item.classList.contains('active');
+      
+      // Fecha todos os outros itens (opcional, deixa a interface mais limpa)
+      document.querySelectorAll('.faq-item').forEach(el => {
+        el.classList.remove('active');
+      });
+
+      // Se não estava ativo, abre este
+      if (!isActive) {
+        item.classList.add('active');
+      }
+    }
+
+    // Script de Integração com a API de Checkout
     async function iniciarCheckout(planType) {
       const email = document.getElementById(`email-${planType}`).value;
       const password = document.getElementById(`password-${planType}`).value;
